@@ -1,7 +1,10 @@
 # NETFLIX GPT
+// this is which we have done
 
 -create react app
 - tailwind css configured
+- Header
+- Login Form
 
 # Features
 - login / Signup 
