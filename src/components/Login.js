@@ -1,9 +1,26 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Header from './Header'
+import { CheckValidData } from "../utils/validate";
 
 const Login = () => {
 
   const [issigninform,setisigninform] = useState(true);
+  const [errormessage, seterrormessage] = useState(null)
+
+  const email  = useRef(null);
+  const password = useRef(null);
+
+  const handlebtnClick = ()=>{
+    // Validate the form data
+    const message = CheckValidData(email.current.value, password.current.value);
+    seterrormessage(message)
+
+    // sign in / singup form
+  }
+
+
+
+
 
 const toggleSigninform = () =>{
   setisigninform(!issigninform);
@@ -21,7 +38,10 @@ const toggleSigninform = () =>{
           alt="BackgroundImage"
         />
       </div>
-      <form className="w-4/12 absolute my-16 mx-auto right-0 left-0 p-8 bg-black bg-opacity-75 rounded-lg text-white">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="w-3/12 absolute my-16 mx-auto right-0 left-0 p-8 bg-black bg-opacity-75 rounded-lg text-white"
+      >
         <h1 className="font-bold text-3xl py-6">
           {issigninform ? "Sign In" : "Sign Up"}
         </h1>
@@ -40,16 +60,24 @@ const toggleSigninform = () =>{
           />
         )}
         <input
+          ref={email}
           className="p-4 my-3 rounded-lg w-full bg-gray-500"
           type="text"
           placeholder="email"
         />
+       
         <input
+          ref={password}
           className="p-4 my-3 w-full rounded-lg bg-gray-500"
           type="password"
           placeholder="password"
         />
-        <button type="submit" className="p-4 my-6 w-full rounded-lg bg-red-700">
+        <p className="text-red-500 font-bold text-lg py-2">{errormessage}</p>
+        <button
+          type="submit"
+          className="p-4 my-6 w-full rounded-lg bg-red-700"
+          onClick={handlebtnClick}
+        >
           {issigninform ? "Sign In" : "Sign Up"}
         </button>
         <p className="py-4 cursor-pointer" onClick={toggleSigninform}>
@@ -62,4 +90,4 @@ const toggleSigninform = () =>{
   );
 }
 
-export default Login
+export default Login;
